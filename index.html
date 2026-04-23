@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <span class="nav-logo">Your Name</span>
+      <div class="nav-links">
+        <a href="#">← Portfolio</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="container">
+      <p class="breadcrumb fade-in"><a href="#">Portfolio</a> / QR Code Generator</p>
+      <div class="section-heading fade-in" style="margin-bottom:0;">
+        <h2>QR Code Generator</h2>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="qr-layout">
+
+        <!-- Form -->
+        <div class="form-card fade-in">
+          <div>
+            <h3>Generate a QR Code</h3>
+            <p>Enter any URL or text to instantly generate a customisable QR code.</p>
+          </div>
+
+          <div class="field">
+            <label for="qrText">Text or URL</label>
+            <input type="text" id="qrText" placeholder="https://example.com" value="https://example.com">
+          </div>
+
+          <div class="options-row">
+            <div class="field">
+              <label for="fgColor">Foreground</label>
+              <input type="color" id="fgColor" value="#1A1814">
+            </div>
+            <div class="field">
+              <label for="bgColor">Background</label>
+              <input type="color" id="bgColor" value="#F5F3EE">
+            </div>
+            <div class="field">
+              <label for="qrSize">Size</label>
+              <select id="qrSize">
+                <option value="256" selected>256 px</option>
+                <option value="384">384 px</option>
+                <option value="512">512 px</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="downloadBtn" class="btn btn-accent">Download QR Code →</button>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-card fade-in">
+          <span class="preview-label">Preview</span>
+          <div id="qrcode"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> Your Name</span>
+      <span>QR Code Generator</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.querySelectorAll('.fade-in')];
+          setTimeout(() => entry.target.classList.add('visible'), siblings.indexOf(entry.target) * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
